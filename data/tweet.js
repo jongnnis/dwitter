@@ -21,7 +21,7 @@ export async function getAll() {
     return tweets
 }
 
-export async function getAllByUsername(){
+export async function getAllByUsername(username){
     return tweets.filter((tweet)=> tweet.username === username)
 }
 
@@ -33,7 +33,7 @@ export async function create(text, name, username){
     const tweet = {
         id:'10',
         text,
-        createdAt: new Date.now().toString(),
+        createdAt: Date.now().toString(),
         name,       //name:name이랑 같음    이름 같으면 :안써도됨
         username
     }
@@ -41,7 +41,7 @@ export async function create(text, name, username){
     return tweets
 }
 
-export async function update(){
+export async function update(id, text){
     const tweet = tweets.find((tweet) =>tweet.id === id)
     if (tweet){
         tweet.text = text

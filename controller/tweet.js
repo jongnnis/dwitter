@@ -11,7 +11,7 @@ export async function getTweets(req, res){
 // getTweet
 export async function getTweet(req, res, next){
     const id = req.params.id;
-    const tweet = await(tweetRepository.getById())
+    const tweet = await tweetRepository.getById(id)
     if (tweet){
         res.status(200).json(tweet)
     }else{
@@ -22,7 +22,7 @@ export async function getTweet(req, res, next){
 // createTweet
 export async function createTweet(req, res, next){
     const {text, name, username} = req.body;
-    const tweet = await(tweetRepository.create())
+    const tweet = await tweetRepository.create(text, name, username)
     res.status(201).json(tweet)
 }
 
@@ -30,7 +30,7 @@ export async function createTweet(req, res, next){
 export async function updateTweet(req, res, next){
     const id = req.params.id
     const text = req.body.text
-    const tweet = await(tweetRepository.update(id, text))
+    const tweet = await tweetRepository.update(id, text)
     if (tweet){
         res.status(200).json(tweet)
     }else{

@@ -33,10 +33,8 @@ const validateSignup = [
     ...validateCredential,
     body('name').notEmpty().withMessage('name은 반드시 입력'),
     body('email').isEmail().withMessage('email 형식 확인'),
-    body('url').isURL().withMessage('URL 형식 확인')
-        .optional({nullable:true, checkFalsy: true}),
+    body('url').isURL().withMessage('URL 형식 확인').optional({nullable:true, checkFalsy: true}),
     validate
-
 ]
 
 // 회원가입  /tweets/signup

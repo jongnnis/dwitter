@@ -5,7 +5,7 @@ import tweetsRouter from './router/tweets.js'
 import authRouter from './router/auth.js'
 import {config} from './config.js'
 import {initSocket} from './connection/socket.js'
-import { db } from './db/database.js';
+import {sequelize } from './db/database.js';
 
 console.log(process.env.JWt_SECRET)
 const app = express();
@@ -20,6 +20,8 @@ app.use((req, res, next) => {
     res.sendStatus(404);
 });
 
-// db.getConnection().then(connection => console.log)
-const server = app.listen(config.host.port);
-initSocket(server)
+sequelize.sync().then(()=>{
+    const server = app.listen(config.host.port);
+    initSocket(server)
+})
+

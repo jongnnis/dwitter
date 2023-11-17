@@ -5,14 +5,16 @@ import tweetsRouter from './router/tweets.js'
 import authRouter from './router/auth.js'
 import {config} from './config.js'
 import {initSocket} from './connection/socket.js'
-import { db } from './db/database.js';
+import { connectDB } from './db/database.js';
 
 console.log(process.env.JWt_SECRET)
 const app = express();
 
+//미들웨어
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors())
+//라우터
 app.use('/tweets', tweetsRouter)
 app.use('/auth', authRouter)
 
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
     res.sendStatus(404);
 });
 
-// db.getConnection().then(connection => console.log)
-const server = app.listen(config.host.port);
-initSocket(server)
+connectDB().then(()=>{
+    const server = app.listen(config.host.port);
+    initSocket(server)
+}).catch(console.error)
